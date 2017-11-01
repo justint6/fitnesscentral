@@ -1,0 +1,257 @@
+/* Move down content because we have a fixed navbar that is 56px tall */
+body {
+  padding-top: 56px;
+}
+
+#searchParams p {
+    margin-top: 0;
+    margin-bottom: 0.6rem;
+}
+
+
+#searchParams .help-less-margin-bottom {
+    margin-top: 0;
+    margin-bottom: 0.6rem;
+}
+
+#searchParams label {
+    margin-bottom: 0;
+}
+
+#exportLinks a {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+#exportLinks label {
+    vertical-align: middle;
+}
+
+#searchParams .counters {
+    margin-top: 30px;
+
+}
+
+#crews_chosen {
+    width: 100% !important;
+}
+
+.name {
+    color: #1D2A59 !important;
+    font-size: xx-large !important;
+}
+
+.logos {
+    background-color: #FFFFFF;
+    padding-left: 3px;
+    padding-right: 0px;
+}
+
+.event_time {
+    width: 60px !important;
+}
+
+.timerring_event_time {
+    width: 60px !important;
+}
+
+.crew {
+    width: 60px !important;
+}
+.a4snumber {
+    width: 20px !important;
+}
+
+.jobnumber {
+    width: 30px !important;
+}
+
+.personnel {
+    width: 30px !important;
+}
+.description  {
+    width: 256px !important;
+}
+
+.voltage {
+    width: 20px !important;
+}
+
+.applicant {
+    width: 40px !important;
+}
+
+.status {
+    width: 60px !important;
+    /*width: 100% !important;*/
+}
+
+.address {
+    width: 240px !important;
+}
+
+.assign {
+    width: 60px !important;
+}
+
+.commentd {
+    width: 20px !important;
+}
+
+.business {
+    width: 60px !important;
+}
+
+.type {
+    width: 20px !important;
+}
+
+.spaceheight{
+    margin-bottom: 100px !important;
+}
+
+.buildInfo {
+    font-size: 50%;
+    padding-top: 16px !important;
+    color: rgba(255, 255, 255, .5) !important;
+}
+
+/* for better positioning/scrolling for anchors in the help page */
+a.anchor {
+    display: block;
+    position: relative;
+    top: -64px;  /* 56(header) + 8(.help.container) */
+    visibility: hidden;
+}
+
+.help.container {
+    padding-top: 8px;
+    padding-bottom: 24px;
+}
+
+p.required:before {
+    content: "* ";
+    color: red;
+}
+.title-buffer{
+    margin-bottom: 5px;
+}
+.sortandsearch {
+    height: 350px;
+    border-style: solid;
+    border-color: lightgray;
+    border-width: 5px 5px 5px 5px;
+    margin: 10px 10px 10px 10px;
+    /*border-spacing: 10px 3px;*/
+}
+.jobcrewsection {
+    height: 350px;
+    border-style: solid;
+    border-color: lightgray;
+    border-width: 5px 5px 5px 5px;
+    margin: 10px 20px 0px -15px;
+    /*border-spacing: 10px 3px;*/
+}
+
+.testmargin {
+    margin-left: 15px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+    margin-top: 5px;
+}
+
+.testmargin2 {
+    margin-left: 125px;
+    margin-bottom: 0px !important;
+    margin-right: 5px;
+    margin-top: 0px !important;
+}
+
+.testmargin3 {
+    margin-left: 250px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+    margin-top: 0px !important;
+}
+
+.testmargin4 {
+    margin-left: 115px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+    margin-top: 10px !important;
+}
+.testmargin5 {
+    margin-left: 80px !important;
+}
+
+.tablesub{
+    margin-bottom: 10px;
+}
+.extramargin {
+    margin-bottom: 15px;
+}
+.chosen-container .chosen-container-multi {
+    max-height:10px;
+    width: 100% !important;
+}
+
+.chosen-container-multi {
+    max-height:30px;
+    width: 100% !important;
+
+}
+
+.chosen-container-multi .chosen-choices {
+    max-height: 30px !important;
+    overflow: auto !important;
+}
+.search-choice {
+
+
+}
+
+.tester {
+    height: 30px !important;
+}
+
+.toolbar {
+
+    float: left !important;
+    margin-top: 5px;
+    margin-left: 27px;
+
+}
+
+.toolbarsub {
+
+    float: left !important;
+    margin-top: 15px !important;
+    margin-left: 0px !important;
+    margin-bottom: -5px !important;
+}
+
+.top {
+
+    float: left !important;
+
+}
+
+
+
+.dataTables_wrapper {
+    background-color: #EEEEEE !important;
+}
+
+.dataTable {
+    Background-color: #ffffff !important;
+}
+.navbar{
+    Background-color: #3A828E !important;
+}
+#SOAPResponse{
+
+}
+
+#pici{
+    margin-top: -20px !important;
+}

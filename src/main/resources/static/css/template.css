@@ -1,0 +1,11 @@
+body {
+    padding-top: 50px;
+}
+
+.alert i { float: left; font-size: 20px; margin-right: 12px; margin-left:12px; }
+
+.buildInfo { font-size: 66%; margin-top:2px !important; color: #66AFE9 !important; }
+
+.well {
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1e5799',endColorstr='#7db9e8',GradientType=0);
+}

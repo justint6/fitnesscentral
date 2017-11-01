@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
+      layout:decorator="layouts/plain">
+<head>
+    <title>C.A.C: About</title>
+</head>
+<body>
+  <div layout:fragment="content">
+
+      <div class="row">
+          <div class='col-md-12 extra'>
+              <h1>About</h1>
+              <div class="help-block">C.A.C - Crew Allocation Console - has been developed for the assigning and alteration of field operative crews to jobs in the PowerOn DMS. The contents of this page may assist in support and maintain operations. </div>
+          </div>
+      </div>
+
+      <div class="row">
+          <div class='col-md-12 extra'>
+              <h2>User Details</h2>
+              <div class="help-block">
+
+                  <!--/* see; Preferences -> Editor Code Style -> General -> Formatter Control -> Enable formatter markers in comments */-->
+                  <!--/* @formatter:off */-->
+                  <div th:if="${#authorization.expression('isAuthenticated()')}">
+<pre>User:&nbsp;<span th:text="${#authentication.name}">&nbsp;</span>
+<span th:if="${#authorization.expression('hasRole(''ROLE_EVALUATOR'')')}">User '<span th:text="${#authentication.name}">&nbsp;</span>' posesses security attribute: ROLE_EVALUATOR.</span></pre>
+                  </div>
+                  <div th:unless="${#authorization.expression('isAuthenticated()')}">
+<pre>User is not authenticated.</pre>
+                  </div>
+                 <!--/* @formatter:on */-->
+              </div>
+          </div>
+      </div>
+      <div class="row">
+          <div class='col-md-12 extra'>
+              <h2>Build/ProfileDetails</h2>
+              <!--/* @formatter:off */-->
+              <div class="help-block">
+<pre>Server:&nbsp;<span th:text="${T(java.net.InetAddress).localHost.hostName}"></span>
+Profile:&nbsp;<span th:text="${#strings.arrayJoin(@environment.getActiveProfiles(), ',')}"></span>
+Built:&nbsp;<span th:text="${T(dyn.BuildInfo).buildDate}"></span></pre>
+              </div>
+              <!--/* @formatter:on */-->
+        </div>
+      </div>
+
+      <div class="row">
+          <div class='col-md-12 extra'>
+              <h2>Browser Details</h2>
+              <div class="help-block"><pre id="browserDetails"></pre></div>
+        </div>
+      </div>
+
+      <div class="row">
+          <div class='col-md-12 extra'>
+              <h2>Health Report</h2>
+
+              <div class="help-block">Information regarding downstream services, the underlying OS, etc.</div>
+
+              <div><pre th:text="${healthJSON}"></pre></div>
+          </div>
+      </div>
+
+      <div class="row">
+          <div class='col-md-12 extra'>
+              <h2>Metrics Report</h2>
+
+              <div class="help-block">Information regarding this server or JVM.</div>
+
+              <div><pre th:text="${metricsJSON}"></pre></div>
+          </div>
+      </div>
+
+      <div class="row">
+          <div class='col-md-12 extra'>
+              <!--/* the glyphicons author asks forß a user-readable attribution, so: */-->
+              <div class="help-block">Built with <a href="http://getbootstrap.com/">Twitter Bootstrap</a>, using <a href="http://glyphicons.com/">Glyphicons</a>. </div>
+          </div>
+      </div>
+
+      <div class="row">
+          <div class='col-md-12 extra'>
+              <div id='now' class="help-block">&nbsp;</div>
+          </div>
+      </div>
+    </div> <!-- end content fragment -->
+
+  <th:block layout:fragment="script" th:inline="text">
+      <script>
+          // <![CDATA[
+          $(function() {
+
+              "use strict";
+
+              $('#now').text('Page rendered: ' + moment().format('MMMM Do YYYY, h:mm:ss a'));
+
+              $('#browserDetails').text(navigator.userAgent);
+          });
+          // ]]>
+      </script>
+  </th:block>
+</body>
+</html>
+

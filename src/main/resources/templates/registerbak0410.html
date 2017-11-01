@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <!--/* The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags */-->
+
+    <meta name="description" content="FC application"/>
+    <meta name="author" content="Justin Teitzel, Sparq Pty. Ltd."/>
+
+    <title>FC: Training Roster</title>
+
+    <link rel='stylesheet' href='/webjars/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css'/>
+
+    <link rel="stylesheet" type="text/css" href="/webjars/datatables/1.10.12/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/webjars/datatables/1.10.12/css/dataTables.bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap-select/1.7.3-1/css/bootstrap-select.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/webjars/font-awesome/4.6.3/css/font-awesome.min.css"/>
+
+    <link href="/flatpickr/flatpickr.min.css" rel="stylesheet"/>
+    <link href="/flatpickr/flatpickr.base16_flat.min.css" rel="stylesheet"/>
+    <link href="/webjars/chosen/1.4.1/chosen.min.css" rel="stylesheet"/>
+    <link href="/css/buttons.dataTables.min.css" rel="stylesheet"/> <!-- this is required as the buttons.datatable in the webjar location is sass (scss) format-->
+    <link href="/css/jqueryui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet"/>
+    <link href="/css/select/1.2.3/css/select.dataTables.min.css" rel="stylesheet"/>
+
+
+
+    <link href="/css/flatpickr-override.css" rel="stylesheet"/>
+    <link href="/css/bootstrap-override.css" rel="stylesheet"/>
+    <link href="/css/datatables-override.css" rel="stylesheet"/>
+    <link href="/css/clients.css" rel="stylesheet"/>
+    <link href="/css/editor.dataTables.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="/DataTables/datatables.min.css"/> <!-- compile of many different style sheets from https://datatables.net/download/ -->
+
+
+    <!-- <link href="https://fonts.googleapis.com/css?family=Oleo+Script:400,700" rel="stylesheet"/>
+     <link href="https://fonts.googleapis.com/css?family=Teko:400,700" rel="stylesheet"/>
+     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>-->
+
+    <style>
+
+        /*[- with the current Bootstrap, the date-field-related buttons/dropdowns have a small visual bug; the
+             css hacks below work around them -]*/
+
+        /* category [- NB: these -ms-* css properties will change/go away over time; may mean that these hacks won't work.
+             Hopefully, they won't be needed as Bootstrap catches up with the browser quirks -]*/
+
+        /*[- Internet Explorer 10 + 11 -]*/
+        @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+            .fixup-forIE {
+                line-height: normal !important;
+            }
+        }
+
+        /*[- Edge Browser -]*/
+        @supports (-ms-ime-align:auto) {
+            .fixup-forIE {
+                line-height: normal !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-fixed-top navbar-dark bg-inverse">
+    <!-- The below line is important for Thymeleaf to correctly interpret the page binding for the @RequstMapping -->
+    <a class="navbar-brand name" th:href="@{/}" href="/">Training Register</a>
+</nav>
+<div class="jumbotron paged">
+    <div class="row top-buffer">&nbsp;</div>
+
+    <table cellpadding="0" cellspacing="0" border="0" class="table cell-border table-sm " id="example" width="100%">
+        <thead>
+        <tr>
+            <th></th>
+            <th>First name</th>
+            <th id="thone"></th>
+            <th id="thtwo"></th>
+            <th id="ththree"></th>
+            <th id="thfour"></th>
+            <th id="thfive"></th>
+            <th id="thsix"></th>
+            <th id="thseven"></th>
+        </tr>
+        </thead>
+    </table>
+
+</div>
+
+<div class="row top-buffer">&nbsp;</div>
+<div class="row top-buffer">&nbsp;</div>
+<div class="row top-buffer">&nbsp;</div>
+<div class="row top-buffer">&nbsp;</div>
+<div class="row top-buffer">&nbsp;</div>
+<div class="row top-buffer">&nbsp;</div>
+<div class="row top-buffer">&nbsp;</div>
+<div class="row top-buffer">&nbsp;</div>
+<div class="row top-buffer">&nbsp;</div>
+<div class="row top-buffer">&nbsp;</div>
+<div class="row top-buffer">&nbsp;</div>
+<button type="button" id="inputButton" class="btn btn-sm btn-primary"> &nbsp; Input Test &nbsp; </button>
+<button type="button" id="postTestButton" class="btn btn-sm btn-primary"> &nbsp; Post Test &nbsp; </button>
+<button type="button" id="deleteTestButton" class="btn btn-sm btn-primary"> &nbsp; Delete Test &nbsp; </button>
+<button type="button" id="PreviousButton" class="btn btn-sm btn-primary"> &nbsp; Previous Date &nbsp; </button>
+
+<!--/* Placed at the end of the document so the pages load faster */-->
+<!--script src="/webjars/jquery/1.11.3/jquery.js"></script-->
+<script src="/webjars/jquery/3.1.1/jquery.js"></script>
+
+<!--/* must load BEFORE shim JS files */-->
+<!--link href="/webjars/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="/webjars/bootstrap/3.3.5/css/bootstrap-theme.min.css" rel="stylesheet"/-->
+
+
+
+<script src="/webjars/chosen/1.4.1/chosen.jquery.min.js"></script>
+<script src="/webjars/tether/1.3.7/dist/js/tether.min.js"></script>
+
+
+<script type="text/javascript" src="/webjars/datatables/1.10.12/js/jquery.dataTables.js"></script>
+<!--<script type="text/javascript" src="/js/dataTables.editor.min.js/dataTables.editor.min.js"></script> requires license -->
+<script type="text/javascript" src="/webjars/momentjs/2.14.1/min/moment.min.js"></script>
+<script type="text/javascript" src="/webjars/datatables-buttons/1.2.4/js/dataTables.buttons.js"></script>
+<script type="text/javascript" src="/webjars/datatables-buttons/1.2.4/js/buttons.bootstrap.js"></script>
+
+<script type="text/javascript" src="/flatpickr/flatpickr.min.js"></script>
+<script type="text/javascript" src="/js/dataTables.editor.min.js"></script>
+<script type="text/javascript" src="/js/editor.bootstrap.min.js"></script>
+<script type="type/javascript" src="/js/select/1.2.3/js/dataTables.select.min.js"></script>
+<!--<script type="text/javascript" src="/js/jqueryui/1.12.1/jquery-ui.js"></script>-->
+
+
+<script type="text/javascript" src="/DataTables/datatables.min.js"></script> <!-- compile of many different things from https://datatables.net/download/ -->
+<script src="/webjars/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js"></script>
+<script src="/webjars/bootstrap-select/1.7.3-1/js/bootstrap-select.min.js"></script>
+
+
+<script th:inline="javascript">
+    // <![CDATA[
+
+    (function ($) {
+        "use strict";
+        var trainingRegisterTable = $("#trainingRegisterTable");
+        /*[- http://stackoverflow.com/questions/24383805/datatables-change-number-of-pagination-buttons -]*/
+        $.fn.DataTable.ext.pager.numbers_length = 10;
+
+        /*[- https://datatables.net/manual/tech-notes/7 -]*/
+        $.fn.dataTable.ext.errMode = 'throw';
+        var postTestButton = $('#postTestButton');
+        var deleteTestButton = $('#deleteTestButton');
+
+        var days = [
+            'SUN', //Sunday starts at 0
+            'MON',
+            'TUE',
+            'WED',
+            'THU',
+            'FRI',
+            'SAT'
+        ];
+
+        var d = new Date(); //This returns Wed Apr 02 2014 17:28:55 GMT+0800 (Malay Peninsula Standard Time)
+        var x = d.getDay();
+        var start_date = new Date(d);
+
+
+
+
+
+        switch (x) {
+            case 0:
+                //day = "Sunday";
+                start_date.setDate(start_date.getDate() - 6); // minus the date
+                break;
+            case 1:
+                //day = "Monday";
+                start_date.setDate(start_date.getDate()); // minus the date
+                break;
+            case 2:
+                //day = "Tuesday";
+                start_date.setDate(start_date.getDate() - 1); // minus the date
+                break;
+            case 3:
+                //day = "Wednesday";
+                start_date.setDate(start_date.getDate() - 2); // minus the date
+                break;
+            case 4:
+                //day = "Thursday";
+                start_date.setDate(start_date.getDate() - 3); // minus the date
+                break;
+            case 5:
+                //day = "Friday";
+                start_date.setDate(start_date.getDate() - 4); // minus the date
+                break;
+            case 6:
+                // day = "Saturday";
+                start_date.setDate(start_date.getDate() - 5); // minus the date
+
+        }
+        var end_date = new Date();
+        end_date.setDate(start_date.getDate() + 6);
+        var nd = new Date(start_date);
+
+        window.alert('the new date is ' + start_date);
+
+
+        Date.prototype.addDays = function(days) {
+            var dat = new Date(this.valueOf())
+            dat.setDate(dat.getDate() + days);
+            return dat;
+        }
+
+        function getDates(startDate, stopDate) {
+            var dateArray = [];
+            var currentDate = startDate;
+            while (currentDate <= stopDate) {
+                dateArray.push(currentDate)
+                currentDate = currentDate.addDays(1);
+            }
+            return dateArray;
+        }
+        var i = 0;
+        var dateArray = getDates(start_date, end_date);
+        for (i = 0; i < dateArray.length; i ++ ) {
+            window.alert (dateArray[i]);
+        }
+        var day1 = dateArray[0].getDay();
+        $('#thone').text(days[day1] + ' ' + dateArray[0].getDate() + '/' + dateArray[0].getMonth());
+        var day2 = dateArray[1].getDay();
+        $('#thtwo').text(days[day2] + ' ' + dateArray[1].getDate() + '/' + dateArray[1].getMonth());
+        var day3 = dateArray[2].getDay();
+        $('#ththree').text(days[day3] + ' ' + dateArray[2].getDate() + '/' + dateArray[2].getMonth());
+        var day4 = dateArray[3].getDay();
+        $('#thfour').text(days[day4] + ' ' + dateArray[3].getDate() + '/' + dateArray[3].getMonth());
+        var day5 = dateArray[4].getDay();
+        $('#thfive').text(days[day5] + ' ' + dateArray[4].getDate() + '/' + dateArray[4].getMonth());
+        var day6 = dateArray[5].getDay();
+        $('#thsix').text(days[day6] + ' ' + dateArray[5].getDate() + '/' + dateArray[5].getMonth());
+        var day7 = dateArray[6].getDay();
+        $('#thseven').text(days[day7] + ' ' + end_date.getDate() + '/' + end_date.getMonth());
+
+
+        function JSONtoArray(){
+            $.ajax({url: "../registers", success: function(result){
+                window.alert(result);
+            }});
+        }
+
+        function makePagedUrl(base) {
+
+            var params = {
+
+            };
+
+            /*[- when a string is empty, split returns an array containing one empty string, rather than an empty array.
+             so clean up any empty params -]*/
+            for (var key in params)
+                if (isEmpty(params[key]))
+                    delete params[key];
+
+            var filterQueryParams = $.param(params, true);
+            //window.alert(filterQueryParams);
+
+
+            var url = base;
+            /* + '?' +
+             (isEmpty(filterQueryParams) ? "" : "&" + filterQueryParams) +*/
+            /*[- May need this form eventually: "&sort=serial&serial.dir=" + sortDirection; -]*/
+            /*"&sort=serial," + sortDirection;*/
+            // window.alert(url);
+            return url;
+        }
+
+
+
+
+        var editor; // use a global for the submit and return data rendering in the examples
+
+
+        var editor =  $('#example').DataTable( {
+            dom:  '<"toolbar"><"top"i><"test"p>rt<"bottom"><"clear">', // see https://datatables.net/reference/option/dom page for options on table controls.
+            ajax: {
+                url: "../clientses",
+                //url: "../manualclient/allclients",
+                dataSrc: 'content',
+                contentType: "application/json",
+                dataFilter: function (data) {
+                    var json = jQuery.parseJSON(data);
+                    //window.alert(JSON.stringify(json.data[0].jobNumber));
+                    json.content = json._embedded.clientses;
+                    delete json._embedded;
+                    delete json.clientses
+                    delete json._links;
+                    window.alert(JSON.stringify(json));
+                    return JSON.stringify(json);
+                }
+            },
+            order: [[ 1, 'asc' ]],
+            columns: [
+                { data: null,
+                    "targets": 0,
+                    sDefaultContent: '',
+                    className: 'select-checkbox'
+                },
+                { data: "first_Name",
+                    "targets": 1},
+                { data: "client_Address",
+                    "targets": 2,
+                    sDefaultContent: '',
+                    render: function ( data, type, row ) {
+                        if ( type === 'display' ) {
+                            return '<input type="checkbox" class="date-active">';
+                        }
+                        return data;
+                    },
+                    className: "dt-body-center"
+                },
+                { data: "phone_Number",
+                    "targets": 3,
+                    sDefaultContent: '',
+                    render: function ( data, type, row ) {
+                        if ( type === 'display' ) {
+                            return '<input type="checkbox" class="date-active">';
+                        }
+                        return data;
+                    },
+                    className: "dt-body-center"
+                },
+                { data: "mobile_Number",
+                    "targets": 4,
+                    sDefaultContent: '',
+                    render: function ( data, type, row ) {
+                        if ( type === 'display' ) {
+                            return '<input type="checkbox" class="date-active">';
+                        }
+                        return data;
+                    },
+                    className: "dt-body-center"
+                },
+                { data: "email_Address",
+                    "targets": 6,
+                    sDefaultContent: '',
+                    render: function ( data, type, row ) {
+                        if ( type === 'display' ) {
+                            return '<input type="checkbox" class="date-active">';
+                        }
+                        return data;
+                    },
+                    className: "dt-body-center"
+                },
+                { data: null,
+                    "targets": 6,
+                    sDefaultContent: '',
+                    render: function ( data, type, row ) {
+                        if ( type === 'display' ) {
+                            return '<input type="checkbox" class="date-active">';
+                        }
+                        return data;
+                    },
+                    className: "dt-body-center"
+                },
+                { data: null,
+                    "targets": 7,
+                    sDefaultContent: '',
+                    render: function ( data, type, row ) {
+                        if ( type === 'display' ) {
+                            return '<input type="checkbox" class="date-active">';
+                        }
+                        return data;
+                    },
+                    className: "dt-body-center"
+                },
+                { data: null,
+                    "targets": 8,
+                    sDefaultContent: '',
+                    render: function ( data, type, row ) {
+                        if ( type === 'display' ) {
+                            return '<input type="checkbox" class="date-active">';
+                        }
+                        return data;
+                    },
+                    className: "dt-body-center"
+                }
+            ],
+            select: {
+                style: 'os',
+                selector: 'td:first-child:not(:last-child)' // no row selection on last column
+            },
+            rowCallback: function ( row, data ) {
+                // Set the checked state of the checkbox in the table
+                //$('input.editor-active', row).prop( 'checked', data.client == 1 );
+
+                //$(row).css('backgroundColor', 'yellow');
+
+            }
+        } );
+
+        $('#example').on( 'change', 'input.editor-active', function () {
+            editor
+                    .edit( $(this).closest('tr'), false )
+                    .set( 'client', $(this).prop( 'checked' ) ? 1 : 0 )
+                    .submit();
+        } );
+
+
+
+
+        function PostTest(){
+
+            $.ajax({
+                type: 'POST',
+                url: '../clientses',
+                data: JSON.stringify({"first_Name":"test", "client_Address":"1", "phone_Number":"1", "mobile_Number":"2", "email_Address":"2" }), // or JSON.stringify ({name: 'jonas'}),
+                success: function(data) { alert('data: ' + data); },
+                contentType: "application/json",
+                dataType: 'json'
+            });
+        }
+
+        function DeleteTest(){
+
+            $.ajax({
+                type: 'DELETE',
+                url: '../clientses/3',
+                data: JSON.stringify({"first_Name":"test", "client_Address":"1", "phone_Number":"1", "mobile_Number":"2", "email_Address":"2" }), // or JSON.stringify ({name: 'jonas'}),
+                success: function(data) { alert('data: ' + data); },
+                contentType: "application/json",
+                dataType: 'json'
+            });
+        }
+
+        $('#inputButton').on('click', function() {
+            JSONtoArray();
+            //var data = table.$('input, select').serialize();
+            //window.alert(
+             //       "The following data would have been submitted to the server: \n\n"+
+             //       data.substr( 0, 120 )+'...'
+            //);
+            return false;
+        } );
+
+        $('#PreviousButton').on('click', function() {
+           window.alert('Here');
+            switch (x) {
+                case 0:
+                    //day = "Sunday";
+                    start_date.setDate(start_date.getDate() - 7); // minus the date
+                    break;
+                case 1:
+                    //day = "Monday";
+                    start_date.setDate(start_date.getDate() - 1); // minus the date
+                    break;
+                case 2:
+                    //day = "Tuesday";
+                    start_date.setDate(start_date.getDate() - 2); // minus the date
+                    break;
+                case 3:
+                    //day = "Wednesday";
+                    start_date.setDate(start_date.getDate() - 3); // minus the date
+                    break;
+                case 4:
+                    //day = "Thursday";
+                    start_date.setDate(start_date.getDate() - 4); // minus the date
+                    break;
+                case 5:
+                    //day = "Friday";
+                    start_date.setDate(start_date.getDate() - 5); // minus the date
+                    break;
+                case 6:
+                    // day = "Saturday";
+                    start_date.setDate(start_date.getDate() - 6); // minus the date
+
+            }
+            var end_date = new Date();
+            end_date.setDate(start_date.getDate() + 6);
+            var nd = new Date(start_date);
+
+            window.alert('the new date is ' + start_date);
+
+
+            Date.prototype.addDays = function(days) {
+                var dat = new Date(this.valueOf())
+                dat.setDate(dat.getDate() + days);
+                return dat;
+            }
+
+            function getDates(startDate, stopDate) {
+                var dateArray = [];
+                var currentDate = startDate;
+                while (currentDate <= stopDate) {
+                    dateArray.push(currentDate)
+                    currentDate = currentDate.addDays(1);
+                }
+                return dateArray;
+            }
+            var i = 0;
+            var dateArray = getDates(start_date, end_date);
+            for (i = 0; i < dateArray.length; i ++ ) {
+                window.alert (dateArray[i]);
+            }
+            var day1 = dateArray[0].getDay();
+            $('#thone').text(days[day1] + ' ' + dateArray[0].getDate() + '/' + dateArray[0].getMonth());
+            var day2 = dateArray[1].getDay();
+            $('#thtwo').text(days[day2] + ' ' + dateArray[1].getDate() + '/' + dateArray[1].getMonth());
+            var day3 = dateArray[2].getDay();
+            $('#ththree').text(days[day3] + ' ' + dateArray[2].getDate() + '/' + dateArray[2].getMonth());
+            var day4 = dateArray[3].getDay();
+            $('#thfour').text(days[day4] + ' ' + dateArray[3].getDate() + '/' + dateArray[3].getMonth());
+            var day5 = dateArray[4].getDay();
+            $('#thfive').text(days[day5] + ' ' + dateArray[4].getDate() + '/' + dateArray[4].getMonth());
+            var day6 = dateArray[5].getDay();
+            $('#thsix').text(days[day6] + ' ' + dateArray[5].getDate() + '/' + dateArray[5].getMonth());
+            var day7 = dateArray[6].getDay();
+            $('#thseven').text(days[day7] + ' ' + end_date.getDate() + '/' + end_date.getMonth());
+        });
+
+        postTestButton.on('click', function() {PostTest();});
+        deleteTestButton.on('click', function() {DeleteTest();});
+
+
+
+    })(jQuery);
+    // ]]>
+
+</script>
+
+
+</body>
+</html>

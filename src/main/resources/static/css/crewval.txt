@@ -1,0 +1,14 @@
+{
+  "crewpair": [
+    {
+      "id": "1"
+      "jobNumber": "J-157-G",
+      "crew": "OTJT070",
+    },
+    {
+      "id": "2"
+      "jobNumber": "J-78709-g",
+      "crew": "OTJT070"
+    }
+  ]
+}

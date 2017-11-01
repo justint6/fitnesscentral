@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <!--/* The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags */-->
+
+    <meta name="description" content="CAC application"/>
+    <meta name="author" content="Justin Teitzel, Sparq Pty. Ltd."/>
+
+    <title>CAC: Search Page</title>
+
+    <link rel='stylesheet' href='/webjars/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css'/>
+
+    <link rel="stylesheet" type="text/css" href="/webjars/datatables/1.10.12/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/webjars/datatables/1.10.12/css/dataTables.bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap-select/1.7.3-1/css/bootstrap-select.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/webjars/font-awesome/4.6.3/css/font-awesome.min.css"/>
+
+    <link href="/flatpickr/flatpickr.min.css" rel="stylesheet"/>
+    <link href="/flatpickr/flatpickr.base16_flat.min.css" rel="stylesheet"/>
+    <link href="/webjars/chosen/1.4.1/chosen.min.css" rel="stylesheet"/>
+
+    <link href="/css/flatpickr-override.css" rel="stylesheet"/>
+    <link href="/css/bootstrap-override.css" rel="stylesheet"/>
+    <link href="/css/datatables-override.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Oleo+Script:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Teko:400,700" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <style>
+
+        /*[- with the current Bootstrap, the date-field-related buttons/dropdowns have a small visual bug; the
+             css hacks below work around them -]*/
+
+        /* category [- NB: these -ms-* css properties will change/go away over time; may mean that these hacks won't work.
+             Hopefully, they won't be needed as Bootstrap catches up with the browser quirks -]*/
+
+        /*[- Internet Explorer 10 + 11 -]*/
+        @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+            .fixup-forIE {
+                line-height: normal !important;
+            }
+        }
+
+        /*[- Edge Browser -]*/
+        @supports (-ms-ime-align:auto) {
+            .fixup-forIE {
+                line-height: normal !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-fixed-top navbar-dark bg-inverse">
+<!-- The below line is important for Thymeleaf to correctly interpret the page binding for the @RequstMapping -->
+    <a class="navbar-brand name" th:href="@{/}" href="/">Crew Allocation Console</a>
+</nav>
+
+<section id="contact">
+    <div class="section-content">
+        <h1 class="section-header">Get in <span class="content-header wow fadeIn " data-wow-delay="0.2s" data-wow-duration="2s"> Touch with us</span></h1>
+        <h3>Lorem Ipsum is simply dummy text of the printing and typesetting industry</h3>
+    </div>
+    <div class="contact-section">
+        <div class="container">
+            <form>
+                <div class="col-md-6 form-line">
+                    <div class="form-group">
+                        <label for="exampleInputUsername">Your name</label>
+                        <input type="text" class="form-control" id="" placeholder=" Enter Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail">Email Address</label>
+                        <input type="email" class="form-control" id="exampleInputEmail" placeholder=" Enter Email id">
+                    </div>
+                    <div class="form-group">
+                        <label for="telephone">Mobile No.</label>
+                        <input type="tel" class="form-control" id="telephone" placeholder=" Enter 10-digit mobile no.">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for ="description"> Message</label>
+                        <textarea  class="form-control" id="description" placeholder="Enter Your Message"></textarea>
+                    </div>
+                    <div>
+
+                        <button type="button" class="btn btn-default submit"><i class="fa fa-paper-plane" aria-hidden="true"></i>  Send Message</button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

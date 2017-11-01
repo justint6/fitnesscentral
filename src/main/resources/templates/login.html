@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
+      layout:decorator="layouts/login">
+<head>
+    <title>C.A.C: Login</title>
+</head>
+<body>
+
+<div layout:fragment="content" class="center-block">
+
+    <div class="row">
+        <div class='col-md-12'>
+            <h3 aria-hidden="true"></h3>
+
+        </div>
+     </div>
+     <div class="row">
+        <div class='col-md-12'>
+            <h1 aria-hidden="true"></h1>
+        </div>
+        <div class='col-md-4'>
+         <img id="pici" width="900" height="616" />
+        </div>
+        <div class='col-md-8'>
+            <form id='loginForm' class='form-horizontal'
+                  role='form' action='/login' method='post'>
+                <div class='form-group'>
+
+                    <div class='col-sm-6'>
+
+                        <h1 aria-hidden="true"></h1>
+
+                        <h2>Welcome to C.A.C - Crew Allocation Console</h2>
+                    </div>
+
+                </div>
+
+                <div class='form-group'>
+                    <label class="col-sm-2 control-label" for='username'>User</label>
+
+                    <div class='col-sm-6'>
+                        <input id="username" name='username' type='text' class='form-control' placeholder='User' />
+                    </div>
+                </div>
+                <div class='form-group'>
+                    <label class="col-sm-2 control-label" for='password'>Password</label>
+
+                    <div class='col-sm-6'>
+                        <input id="password" name='password' type='password' class='form-control' placeholder='Password' />
+                    </div>
+                </div>
+
+                <div class='form-group'>
+                    <div class='col-sm-offset-2 col-sm-10'>
+                        <button type='submit' id="login" class='btn btn-primary' disabled='disabled'>Login</button>
+                        <div id='waitSpinner' style="display:none;" class='btn' >
+                             <img src="/images/ajax-loader.gif" height='22' width='22' alt="Loading..." />
+                        </div>
+                    </div>
+                </div>
+
+                <div class='form-group'>
+                    <div class='col-sm-offset-1 col-sm-7'>
+                        <div style="font-size: 80%" class="help-block">
+                            <strong>NOTICE:</strong> C.A.C usage is restricted to authorised users only; any and all activities on this system may be logged.
+                            Unauthorized access will be fully investigated and reported to the appropriate law enforcement agencies.
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div th:if="${param.logout}" class="alert alert-info col-lg-12 centered" role="alert">
+        <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+
+        You have been logged out.
+    </div>
+
+    <div th:if="${param.denied}" class="alert alert-warning col-lg-12 centered" role="alert">
+        <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+
+        C.A.C may only be used by <em>appropriately authorised</em> Crew Schedulers.<br />
+
+        <!--/* this span is just here to take up the space, for indentation; that's why the image is transparent */-->
+        <span style="opacity:0" class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+
+        You may mail <a href="mailto:sparqservicedesk@sparq.com.au?subject=Request%20For%20OPCREW%20Access">sparqservicedesk@sparq.com.au</a> to enquire about access.
+    </div>
+
+    <div th:if="${param.error}" class="alert alert-warning col-lg-12 centered" role="alert">
+        <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+
+        Cannot login. Please try again&hellip;
+    </div>
+
+</div>
+<th:block layout:fragment="script">
+    <script>
+        $(function() {
+
+            "use strict";
+
+            var login = $('#login');
+            var loginForm = $('#loginForm');
+            var username = $('#username');
+            var password = $('#password');
+            var inputs = $(username).add(password);
+            var waitSpinner = $('#waitSpinner');
+            var picture = $('#pici');
+
+            picture.attr('src', "images/powerlines.png");
+
+
+            function checkEmpty() {
+
+                // filter over the empty inputs
+                return inputs.filter(function() {
+                            return !$.trim(this.value);
+                        }).length === 0;
+            }
+
+            inputs.on('blur keyup change', function() {
+                login.prop("disabled", !checkEmpty());
+            }).blur(); // trigger an initial blur
+
+            username.focus();
+
+            loginForm.on('submit', function(event) {
+                waitSpinner.show();
+            });
+        });
+    </script>
+</th:block>
+</body>
+</html>

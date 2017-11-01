@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
+      layout:decorator="layouts/plain">
+<head>
+    <title>C.A.C: HELP</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="row">
+        <div class='col-md-12 extra'>
+            <h1>HELP</h1>
+            <div class="help-block">The contents of this page may assist you to use C.A.C in a productive and enjoyable manner.</div>
+
+            <h3>Problems Logging In</h3>
+            <p>The corporate Active Directory service is used.</p>
+            <p>Users need to be members of the group: ‘CN=Asset Reliability Officers,OU=General Distribution Lists,OU=Mail Enabled,DC=energex,DC=com,DC=au.’
+                If you are being denied access to C.A.C, you will need to make a SPARQ service desk request to become a member of this group.</p>
+
+            <h3>'Not Found' Reporting</h3>
+            <p>There is a subtle but important distinction between how C.A.C reports an incident as "Not Found."</p>
+
+            <p>
+                For example, this:<br />
+                <img src="images/help/webi-notfound-normal.png" /><br />
+                and this:<br /><br />
+                <img src="images/help/webi-notfound-times-3.png"/><br />
+                The latter case probably indicates that the 'downstream' webservices that C.A.C relies on have "gone away", at least temporarily.
+                You should wait a while and try again and if that doesn't resolve the issue, you should probably report this to The Powers That Administer WEBI.
+            </p>
+
+            <h3>Tab Behaviour</h3>
+            <p>
+                You can use tab/shift-tab to quickly move between elements on a page.
+            </p>
+
+            <h3>Select Box Behaviour</h3>
+            <p>
+                If you type into a select box, you will reduce the number of items displayed, as shown:<br /><br />
+                <img src="images/help/webi-select.png" width="50%" />
+            </p>
+            <p>
+                You can clear the box by clicking the 'x' symbol.
+            </p>
+
+            <h3>Auditing</h3>
+            <p>
+                C.A.C maintains audit logs of all changes made. At the end of each month these are emailed to
+                the C.A.C-specific <a href="mailto:CACAUDITLOGS@sparq.com.au">C.A.C AUDIT LOGS</a> distribution list.
+                If you need access to these logs, you should contact the SPARQ service desk.
+            </p>
+
+            <h3>Other</h3>
+            <p>
+                The 'About' link will bring up a new window that shows a fair amount of technical information regarding C.A.C. This may help the C.A.C
+                support staff identify any problems, if such do occur.
+            </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class='col-md-12 extra'>
+            <div id='now'>&nbsp;</div>
+        </div>
+    </div>
+</div>
+
+<th:block layout:fragment="script" th:inline="text">
+    <script>
+        // <![CDATA[
+        $(function () {
+
+            "use strict";
+
+            $('#now').text('Page rendered: ' + moment().format('MMMM Do YYYY, h:mm:ss a'));
+
+            $('#browserDetails').text(navigator.userAgent);
+        });
+        // ]]>
+    </script>
+</th:block>
+</body>
+</html>

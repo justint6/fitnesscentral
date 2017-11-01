@@ -1,0 +1,50 @@
+#originalActionTakenText, #originalCommentsText, #storyReFault {
+    font-size: 80%;
+    cursor: not-allowed;
+    background-color: #F7F7F9;
+    overflow:auto;
+    resize:none;
+    margin-bottom: 8px;
+}
+
+.extra {
+    margin-top: 18px;
+}
+
+.break {
+    display: block;
+}
+
+.no-bottom {
+    margin-bottom: 0px;
+}
+
+.no-top {
+    margin-top: 0px;
+}
+.navbar-brand {
+    margin-top: -5px;
+}
+
+/*always show scrollbar*/
+html, body { height: 100.1%; }
+
+.form-group.required label:before {
+    content:"* ";
+    color:red;
+    font-size: 120%;
+}
+
+.panel-heading {
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+}
+
+.panel-body {
+    padding-top: 8px !important;
+}
+
+div.panel div.form-group {
+    margin-bottom: 0px !important;
+}
+
